@@ -27,7 +27,7 @@ def predict():
     link=request.form['search']
 
     answer=get_data(link)[0]
-
+    return render_template('page2.html', prediction_text=answer)
 
 
 @app.route('/automated_testing',methods=['POST'])
