@@ -1,6 +1,0 @@
-political
-nonpolitical
-policy/economy
-politics
-askindia
-business/finance
