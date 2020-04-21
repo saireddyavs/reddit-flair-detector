@@ -19,7 +19,7 @@ import numpy as np
 
 import re
 import nltk
-#nltk.download('all')
+nltk.download('all')
 
 
 from collections import Counter
@@ -174,7 +174,7 @@ def get_combined(question,explanation,comments):
 def get_data(link):
     question,explanation,comments=scrape(link)
     combined=get_combined(question,explanation,comments)
-    model=joblib.load("pipeline.pkl")
+    model=joblib.load("pipeline1.pkl")
     return model.predict([combined])
     
     
