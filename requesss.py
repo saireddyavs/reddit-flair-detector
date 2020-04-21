@@ -2,6 +2,8 @@ import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
 
+from preprocessor_and_predictor import get_data
+
 app = Flask(__name__)
 #model = pickle.load(open('model.pkl', 'rb'))
 
@@ -10,8 +12,9 @@ def home():
     return render_template('page1.html')
 
 
-@app.route('/automated_testing',method=['POST'])
-def automate():
+    
+
+    
     
 
 @app.route('/predict',methods=['POST'])
@@ -20,38 +23,48 @@ def predict():
     For rendering results on HTML GUI
     '''
     int_features = [x for x in request.form.values()]
-    #final_features = [np.array(int_features)]
-    #prediction = model.predict(final_features)
+    print(request.form['search'])
+    link=request.form['search']
 
-    #output = round(prediction[0], 2)
+    answer=get_data(link)[0]
+
+
+
+@app.route('/automated_testing',methods=['POST'])
+def automate():
+
+    print("hi")
+    
+    content = request.files['file'].read().decode("utf-8")
+
+
+    content=open(content,"rb").readlines()
 
     
 
-    with open(filename) as f:
-        content = f.readlines()
+    
+    print(content)
     # you may also want to remove whitespace characters like `\n` at the end of each line
     links = [x.strip() for x in content]
 
-    answers=[get_data(x) for x in links]
+       
+
+    answers=[get_data(x.decode("utf-8"))[0] for x in links]
 
     res = dict(zip(links, answers))
 
+    print(res)
+
+    resp = jsonify(res)
 
 
-    if request.form['form_name'] === 'text_entry_form':
-        # code to process textarea data
-    else:
-        # code to process file upload data
+    resp.status_code = 200
+    print(resp)
+    return resp
 
     
-
-
-
-   
     
 
-    return render_template('page2.html', prediction_text='Employee Salary should be $ {}'.format(int_features))
-
-
+    
 if __name__ == "__main__":
     app.run(debug=True)

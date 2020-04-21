@@ -19,7 +19,7 @@ import numpy as np
 
 import re
 import nltk
-nltk.download('all')
+# nltk.download('all')
 
 
 from collections import Counter
