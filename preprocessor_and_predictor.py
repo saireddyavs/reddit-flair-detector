@@ -42,7 +42,15 @@ import joblib
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from collections import Counter
-from wordcloud import WordCloud, STOPWORDS 
+from wordcloud import WordCloud, STOPWORDS
+import praw
+reddit = praw.Reddit(client_id = "_UH7q5CBQB_MNQ",
+					client_secret = "i4ajMqTwMzWdDzdEU1oF-L-PXXI",
+					user_agent = "detector",
+					username = "saireddyavs",
+					password = "1234567890")
+
+
 def scrape(link):
 
     link=[link]
@@ -145,14 +153,8 @@ def get_wordnet_pos(tag):
 def get_combined(question,explanation,comments):
     question=preprocess(question)
     explanation=preprocess(explanation)
-    cleaned_comments_single=" "
-    if comments==[[]]:
-        comments=" "
-    else:
-        c=literal_eval(str(comments[0]).strip())
-        l1=list(map(preprocess, c))
-    #     cleaned_comments.append(l1)
-        cleaned_comments_single=" ".join(l1)
+    cleaned_comments_single=preprocess(comments)
+    
     
     no_contract_question=' '.join(map(str,[contractions.fix(word) for word in question.split()]))
     no_contract_explanation=' '.join(map(str,[contractions.fix(word) for word in explanation.split()]))
@@ -175,7 +177,25 @@ def get_combined(question,explanation,comments):
     return combined
 
 def get_data(link):
-    question,explanation,comments=scrape(link)
+    #question,explanation,comments=scrape(link)
+    submission = reddit.submission(url = link)
+    question=str(submission.title)
+    explanation=str(submission.selftext)
+    submission.comments.replace_more(limit=None)
+    comments=""
+    count = 0
+    print(question)
+    print(explanation)
+    
+    for top_level_comment in submission.comments:
+        comments+=str(top_level_comment.body)
+        count+=1
+        if(count > 10):
+            break
+
+
+	
+    
     combined=get_combined(question,explanation,comments)
     model1=joblib.load("pipeline1.pkl")
     model2=joblib.load("pipeline.pkl")
