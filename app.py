@@ -1,4 +1,6 @@
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore")
 from flask import Flask, request, jsonify, render_template
 import pickle
 
