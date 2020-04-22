@@ -14,9 +14,8 @@ bs4
 urllib3
 contractions
 autocorrect
-wordcloud
 joblib
-keras
-tensorflow
-Keras-Preprocessing
+keras==2.2.4
+tensorflow==1.13.1
+Keras-Preprocessing==1.1.0
 
