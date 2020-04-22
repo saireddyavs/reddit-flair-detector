@@ -16,4 +16,7 @@ contractions
 autocorrect
 wordcloud
 joblib
+keras
+tensorflow
+Keras-Preprocessing
 
