@@ -19,8 +19,8 @@ import numpy as np
 
 import re
 import nltk
-nltk.download('all')
-
+# nltk.download('all')
+import json
 
 from collections import Counter
 # from textblob import TextBlob
@@ -35,10 +35,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation, NMF
 from nltk.stem import WordNetLemmatizer
 from nltk.probability import FreqDist
-
+from keras_preprocessing.text import tokenizer_from_json
 
 import joblib
-
+import tensorflow as tf
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from collections import Counter
 from wordcloud import WordCloud, STOPWORDS 
 def scrape(link):
 
@@ -174,7 +176,35 @@ def get_combined(question,explanation,comments):
 def get_data(link):
     question,explanation,comments=scrape(link)
     combined=get_combined(question,explanation,comments)
-    model=joblib.load("pipeline1.pkl")
-    return model.predict([combined])
-    
+    model1=joblib.load("pipeline1.pkl")
+    model2=joblib.load("pipeline.pkl")
+    model3=tf.keras.models.load_model("lstm1.h5")
+
+    with open('tokenizer.json') as f:
+    	data = json.load(f)
+    	tokenizer = tokenizer_from_json(data)
+
+    lb1=joblib.load("label_biarizer.pkl")
+
+    answer=[]
+    answer.append(model1.predict([combined])[0])
+    answer.append(model2.predict([combined])[0])
+
+    max_length=100
+
+    trunc_type='post'
+    padding_type='post'
+    tokens=tokenizer.texts_to_sequences([combined])
+
+    padded=pad_sequences(tokens, maxlen=max_length, padding=padding_type, truncating=trunc_type)
+                                        
+    answer.append(lb1.inverse_transform(model3.predict([padded]))[0])
+
+
+    print(answer)
+
+
+
+
+    return Counter(answer).most_common(1)[0]
     

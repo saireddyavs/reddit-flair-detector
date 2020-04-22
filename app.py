@@ -4,6 +4,10 @@ import pickle
 
 from preprocessor_and_predictor import get_data
 
+from werkzeug import secure_filename
+
+
+
 app = Flask(__name__)
 #model = pickle.load(open('model.pkl', 'rb'))
 
@@ -33,23 +37,63 @@ def predict():
 @app.route('/automated_testing',methods=['POST'])
 def automate():
 
+
+    #import urllib
+
+    #url=request.files['file']
+
+    #file=urllib.request.urlopen(url.read().decode("utf=8"))
+
+    #for line in file:
+    #        decoded_line=line
+    #        print(decoded_line)
+    
+            
+
+    
+        
+
     print("hi")
     
-    content = request.files['file'].read().decode("utf-8")
+    content = request.files['file']
+
+    file=request.files['file']
+
+    filename = secure_filename(content.filename) 
+
+    import os
 
 
-    content=open(content,"rb").readlines()
+    file.save(os.path.join(os.getcwd(),filename))
+
+
+    with open(os.path.join(os.getcwd(),filename)) as f:
+            file_content = f.readlines()
+
+
+    print(file_content)
+
+    # print(request.get_json())
+
+    # print(content)
+
+    # print(content.filename)
+
+
+    # content=content.read()
 
     
 
     
-    print(content)
+    print(type(file_content))
     # you may also want to remove whitespace characters like `\n` at the end of each line
-    links = [x.strip() for x in content]
+    links = [x.strip() for x in file_content]
 
+
+    print(links)
        
 
-    answers=[get_data(x.decode("utf-8"))[0] for x in links]
+    answers=[get_data(x)[0] for x in links]
 
     res = dict(zip(links, answers))
 
