@@ -20,7 +20,7 @@ from collections import Counter
 
 
 
-from keras_preprocessing.text import tokenizer_from_json
+# from keras_preprocessing.text import tokenizer_from_json
 
 import joblib
 # import tensorflow as tf
