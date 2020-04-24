@@ -30,9 +30,9 @@ from wordcloud import STOPWORDS
 import praw
 
 
-reddit = praw.Reddit(client_id = "_UH7q5CBQB_MNQ",
-					client_secret = "i4ajMqTwMzWdDzdEU1oF-L-PXXI",
-					user_agent = "detector",
+reddit = praw.Reddit(client_id = "VmSi9YqPqeslPQ",
+					client_secret = "aVxcXEnFX6UEuc0zBq4Lboi32Go",
+					user_agent = "detector1",
 					username = "saireddyavs",
 					password = "1234567890")
 
