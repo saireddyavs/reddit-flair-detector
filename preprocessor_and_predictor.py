@@ -29,6 +29,9 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from wordcloud import STOPWORDS
 import praw
 
+physical_devices = tf.config.list_physical_devices('GPU') 
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
 
 reddit = praw.Reddit(client_id = "VmSi9YqPqeslPQ",
 					client_secret = "aVxcXEnFX6UEuc0zBq4Lboi32Go",
@@ -43,7 +46,6 @@ def get_data_from_link(link):
     question=str(submission.title)
     explanation=str(submission.selftext)
     submission.comments.replace_more(limit=None)
-    print(submission.comments)
     comment=""
     count = 0
         
