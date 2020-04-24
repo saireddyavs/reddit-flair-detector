@@ -1,4 +1,4 @@
-import numpy as np
+
 import warnings
 warnings.filterwarnings("ignore")
 from flask import Flask, request, jsonify, render_template
@@ -32,7 +32,7 @@ def predict():
     print(request.form['search'])
     link=request.form['search']
 
-    answer=get_data(link)[0]
+    answer=get_data([link])[link]
     return render_template('page2.html', prediction_text=answer)
 
 
@@ -57,9 +57,9 @@ def automate():
 
     print("hi")
     
-    content = request.files['file']
+    content = request.files['upload_file']
 
-    file=request.files['file']
+    file=request.files['upload_file']
 
     filename = secure_filename(content.filename) 
 
@@ -95,13 +95,12 @@ def automate():
     print(links)
        
 
-    answers=[get_data(x)[0] for x in links]
+    answers=get_data(links)
 
-    res = dict(zip(links, answers))
+    
 
-    print(res)
-
-    resp = jsonify(res)
+  
+    resp = jsonify(answers)
 
 
     resp.status_code = 200
