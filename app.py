@@ -55,7 +55,7 @@ def automate():
     
         
 
-    print("hi")
+ 
     
     content = request.files['upload_file']
 
@@ -73,7 +73,7 @@ def automate():
             file_content = f.readlines()
 
 
-    print(file_content)
+   
 
     # print(request.get_json())
 
@@ -86,14 +86,11 @@ def automate():
 
     
 
-    
-    print(type(file_content))
+  
     # you may also want to remove whitespace characters like `\n` at the end of each line
     links = [x.strip() for x in file_content]
 
 
-    print(links)
-       
 
     answers=get_data(links)
 
@@ -104,7 +101,7 @@ def automate():
 
 
     resp.status_code = 200
-    print(resp)
+    
     return resp
 
     
