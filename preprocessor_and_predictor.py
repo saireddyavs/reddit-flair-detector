@@ -20,7 +20,7 @@ from collections import Counter
 
 
 
-from keras_preprocessing.text import tokenizer_from_json
+# from keras_preprocessing.text import tokenizer_from_json
 
 import joblib
 #import tensorflow as tf
@@ -29,7 +29,6 @@ import joblib
 from wordcloud import STOPWORDS
 import praw
 
-from nltk.stem import PorterStemmer
 
 reddit = praw.Reddit(client_id = "_UH7q5CBQB_MNQ",
 					client_secret = "i4ajMqTwMzWdDzdEU1oF-L-PXXI",
