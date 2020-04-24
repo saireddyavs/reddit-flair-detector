@@ -144,7 +144,7 @@ def get_data(links):
     res = dict(zip(links,list(arr1)))
 
 
-	print(reddit.auth.limits)
+    print(reddit.auth.limits)
 
 
 #     resp = jsonify(res)
