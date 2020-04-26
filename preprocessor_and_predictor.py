@@ -83,8 +83,8 @@ def get_data(links):
 
     stopwords = set(STOPWORDS)
 
-    lemmatizer = nltk.stem.WordNetLemmatizer()
-    df['combined']=df.combined.map(lambda x:" ".join([lemmatizer.lemmatize(i)  for i in x.split() if i not in stopwords]))
+    porter_stemmer = nltk.stem.PorterStemmer()
+    df['combined']=df.combined.map(lambda x:" ".join([porter_stemmer.stem(i)  for i in x.split() if i not in stopwords]))
 
 
 
