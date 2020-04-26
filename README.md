@@ -1,4 +1,4 @@
-# reddit-fliae-detector
+# reddit-flair-detector
 reddit flair detector
 
 
